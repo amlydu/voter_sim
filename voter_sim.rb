@@ -28,8 +28,8 @@ end
 class Person
 end
 
-class Voter < Person
-end
+# class Voter < Person
+# end
 
 # class Politician < Voter
 # end
