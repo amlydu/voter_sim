@@ -279,12 +279,15 @@ def start_voter_sim
 	voter_sim.main_menu
 end
 
+#beginning the whole sim
 start_voter_sim
 
 =begin
 
 E. When I type Vote, start the simulation.
-	1. First, run a campaign. Every politician each do should visit every each do voter and do a stump speech.
+	1. First, run a campaign. Every politician each do should visit every each do Voter and do a stump speech.
+			- Create a Voter class? Inherits from the person and politician?
+
 	2. If a politician is a Republican, he has a
 		- 90% chance of convincing a Tea Party voter to vote for him
 		- 75% chance of convincing a Conservative voter to vote for him
