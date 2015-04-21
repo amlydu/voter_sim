@@ -38,6 +38,7 @@ class VotingSim
 		when "vote", "v"
 			puts "Voting isn't allowed here, this is a dictatorship."
 			#jesus christ I don't want to know....
+			run_campaign
 			main_menu
 		when "help", "h"
 			puts  "Directions: ",
@@ -80,6 +81,8 @@ class VotingSim
 				person_to_update.capitalize!
 				if Person.find_person(person_to_update) == person_to_update
 					Person.update_person(person_to_update)
+				else 
+					puts "Sorry, there doesn't seem to be a person by that name here."
 				end
 			else
 				puts "Sorry, there are no people to update. Please create some!"
@@ -99,6 +102,24 @@ class VotingSim
 		end
 	end
 
+	#TRY THE CAMPAIGN STUFF
+	def run_campaign
+		Voter.new
+		p Voter.all_voters
+
+		#Each politician gives a stump speech
+		stump_speeches = ["I'm am here to make for you a better tomorrow!\nI will do this through empty promises and swinging deals with private interest groups!\nA vote for me is a vote for an America free from those who hate freedom!", 
+			"I won't make any promises that I can't keep- so I will not promise you anything.\nBut one thing I promise you is that I will be an average president.\n I assure you, I will do no more or no less than it takes to make this country the same way it's always been.",
+			"Blah blah blah is anyone listening, I'm pretty sure my mic isn't even on.\n Who cares about politics anyway? Blah blah blah blah blah\nSomething something lower taxes, something something healthcare, something something",
+			""]
+
+		Politician.all.each do |politician|
+			puts "#{politician.name} gives his/her speech to the voters: #{stump_speeches.sample}"
+			# puts stump_speeches.sample
+		end
+
+	end
+
 end
 
 
@@ -111,6 +132,10 @@ def ask(question) #refactor code with this
 	gets.chomp.downcase
 end
 
+#returns a random number between 1 and 100
+def random_num
+	rand(1..100)
+end
 #######################################
 #Person and Politician Classes
 #######################################
@@ -158,8 +183,6 @@ class Person
 		self.all.each do |person|
 			if person.name == name_of_person
 				return person.name
-			else
-				puts "Sorry, there doesn't seem to be a person by that name here."
 			end
 		end
 	end
@@ -269,6 +292,17 @@ class Politician < Person
 
 end
 
+class Voter
+	@@voters = Person.all + Politician.all #create an array of all the objects because they're all voters
+	
+	def self.all_voters
+		@@voters
+	end
+
+
+
+end
+
 #######################################
 #Start voter sim method
 #######################################
@@ -286,10 +320,10 @@ start_voter_sim
 
 E. When I type Vote, start the simulation.
 	1. First, run a campaign. Every politician each do should visit every each do Voter and do a stump speech.
-			- Create a Voter class? Inherits from the person and politician?
+			- Create a Voter class? Inherits from the person and politician?check
 
 	2. If a politician is a Republican, he has a
-		- 90% chance of convincing a Tea Party voter to vote for him
+		- 90% chance of convincing a Tea Party voter to vote for him #generate random number out of 100; if <= 90 
 		- 75% chance of convincing a Conservative voter to vote for him
 		- 50% chance of convincing a Neutral voter to vote for him
 		- 25% chance of convincing a Liberal voter to vote for him
